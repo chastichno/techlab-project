@@ -1,27 +1,32 @@
-import React from 'react';
-import AppNavbar from './components/AppNavbar';
-import TasksList from './components/TasksList';
-import TaskModel from './components/TaskModal';
-import { Container } from 'reactstrap';
+import React, { Component } from 'react';
+
+import { Router, View } from "react-navi";
 
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadUser } from './actions/authActions';
+import routes from './routes'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-function App() {
-  return (
-    <Provider store={store}>
-      <div className="App">
-        <AppNavbar />
-        <Container>
-          <TaskModel />
-          <TasksList />
-        </Container>
-      </div>
-    </Provider>
-  );
+
+
+
+
+class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+  render() {
+    return (
+      <Provider store={store}>
+        <Router routes={routes}>
+          <View />
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 export default App;
